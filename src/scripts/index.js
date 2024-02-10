@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { initialCards } from "./cards.js";
 import { createCard, removeCard, likeCard } from "../components/card.js"
-import { openModal, closeModal, closeModalOnMouseDownHandler, closeModalOnPressEscapeHandler } from "../components/modal.js"
+import { openModal, closeModal, closeModalOnMouseDownHandler } from "../components/modal.js"
 
 /* Start Variables */
 const placesListElement = document.querySelector('.places__list');
@@ -26,63 +26,65 @@ const cardImagePopupDescriptionElement = cardImagePopupElement.querySelector('.p
 /* End Variables */
 
 /* Start Functions */
-function openPopupImage(placeName, link) {
-    openPopup(cardImagePopupElement);
+const openPopupImage = (placeName, link) => {
+    openModal(cardImagePopupElement);
     cardImagePopupImageElement.src = link;
+    cardImagePopupImageElement.alt = placeName;
     cardImagePopupDescriptionElement.textContent = placeName;
 }
 
-function closePopupOnPressEscapeHandler(evt) {
-    closeModalOnPressEscapeHandler(evt, closePopup);
-}
-
-function closePopupOnMouseDownHandler(evt) {
-    closeModalOnMouseDownHandler(evt, closePopup);
-}
-
-function openPopup(popupElement) {
-    openModal(popupElement);
-    document.addEventListener('keydown', closePopupOnPressEscapeHandler);
-}
-
-function closePopup(popupElement) {
-    document.removeEventListener('keydown', closePopupOnPressEscapeHandler);
-    closeModal(popupElement);
-}
-/* End Functions */
-
-/* Start Events */
-profileEditButtonElement.addEventListener('click', () => {
-    openPopup(profileEditPopupElement);
+const profileEditButtonClickHandler = () => {
+    openModal(profileEditPopupElement);
     profileEditPopupFormNameElement.value = profileTitleElement.textContent;
     profileEditPopupFormDescriptionElement.value = profileDescriptionElement.textContent;
-});
-profileEditPopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
-profileEditPopupCloseButtonElement.addEventListener('click', () => closePopup(profileEditPopupElement));
-profileEditPopupFormElement.addEventListener('submit', evt => {
+}
+
+const profileEditPopupCloseButtonClickHandler = () => {
+    closeModal(profileEditPopupElement);
+}
+
+const profileEditPopupFormSubmitHandler = evt => {
     evt.preventDefault();
 
     profileTitleElement.textContent = profileEditPopupFormNameElement.value;
     profileDescriptionElement.textContent = profileEditPopupFormDescriptionElement.value;
     profileEditPopupFormNameElement.value = '';
     profileEditPopupFormDescriptionElement.value = '';
-    closePopup(profileEditPopupElement);
-});
+    closeModal(profileEditPopupElement);
+}
 
-cardAddButtonElement.addEventListener('click', () => openPopup(cardAddPopupElement));
-cardAddPopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
-cardAddPopupCloseButtonElement.addEventListener('click', () => closePopup(cardAddPopupElement));
-cardAddPopupFormElement.addEventListener('submit', evt => {
+const cardAddButtonClickHandler = () => {
+    openModal(cardAddPopupElement);
+}
+
+const cardAddPopupCloseButtonClickHandler = () => {
+    closeModal(cardAddPopupElement);
+}
+
+const cardAddPopupFormSubmitHandler = evt => {
     evt.preventDefault();
 
     const card = createCard(cardAddPopupFormNameElement.value, cardAddPopupFormUrlElement.value, removeCard, likeCard, openPopupImage);
     placesListElement.prepend(card);
     cardAddPopupFormNameElement.value = '';
     cardAddPopupFormUrlElement.value = '';
-    closePopup(cardAddPopupElement);
-});
-cardImagePopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
-cardImagePopupCloseButtonElement.addEventListener('click', () => closePopup(cardImagePopupElement));
+    closeModal(cardAddPopupElement);
+}
+/* End Functions */
+
+/* Start Events */
+profileEditButtonElement.addEventListener('click', profileEditButtonClickHandler);
+profileEditPopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
+profileEditPopupCloseButtonElement.addEventListener('click', profileEditPopupCloseButtonClickHandler);
+profileEditPopupFormElement.addEventListener('submit', profileEditPopupFormSubmitHandler);
+
+cardAddButtonElement.addEventListener('click', cardAddButtonClickHandler);
+cardAddPopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
+cardAddPopupCloseButtonElement.addEventListener('click', cardAddPopupCloseButtonClickHandler);
+cardAddPopupFormElement.addEventListener('submit', cardAddPopupFormSubmitHandler);
+
+cardImagePopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
+cardImagePopupCloseButtonElement.addEventListener('click', () => closeModal(cardImagePopupElement));
 /* End Events */
 
 /* Start Runtime Initialize */

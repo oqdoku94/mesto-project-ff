@@ -9,6 +9,7 @@ const createCard = (name, link, removeCardCallback, likeCallback, showImageCallb
     const cardLikeButtonElement = card.querySelector('.card__like-button');
 
     cardImageElement.src = link;
+    cardImageElement.alt = name;
     cardImageElement.addEventListener('click', () => showImageCallback(name, link));
     cardTitleElement.textContent = name;
     cardDeleteButtonElement.addEventListener('click', () => removeCardCallback(card));
