@@ -26,7 +26,7 @@ const cardImagePopupDescriptionElement = cardImagePopupElement.querySelector('.p
 /* End Variables */
 
 /* Start Functions */
-function openPopupImage (placeName, link) {
+function openPopupImage(placeName, link) {
     openPopup(cardImagePopupElement);
     cardImagePopupImageElement.src = link;
     cardImagePopupDescriptionElement.textContent = placeName;
