@@ -70,6 +70,10 @@ const cardAddPopupFormSubmitHandler = evt => {
     cardAddPopupFormUrlElement.value = '';
     closeModal(cardAddPopupElement);
 }
+
+const cardImagePopupCloseButtonClickHandler = () => {
+    closeModal(cardImagePopupElement);
+}
 /* End Functions */
 
 /* Start Events */
@@ -84,7 +88,7 @@ cardAddPopupCloseButtonElement.addEventListener('click', cardAddPopupCloseButton
 cardAddPopupFormElement.addEventListener('submit', cardAddPopupFormSubmitHandler);
 
 cardImagePopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
-cardImagePopupCloseButtonElement.addEventListener('click', () => closeModal(cardImagePopupElement));
+cardImagePopupCloseButtonElement.addEventListener('click', cardImagePopupCloseButtonClickHandler);
 /* End Events */
 
 /* Start Runtime Initialize */
