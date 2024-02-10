@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { initialCards } from "./cards.js";
 import { createCard, removeCard, likeCard } from "../components/card.js"
-import { openModal, closeModal, closeModalOnMouseDownLayout, closeModalOnPressEscape } from "../components/modal.js"
+import { openModal, closeModal, closeModalOnMouseDownHandler, closeModalOnPressEscapeHandler } from "../components/modal.js"
 
 /* Start Variables */
 const placesListElement = document.querySelector('.places__list');
@@ -26,24 +26,27 @@ const cardImagePopupDescriptionElement = cardImagePopupElement.querySelector('.p
 /* End Variables */
 
 /* Start Functions */
-const openPopupImage = (placeName, link) => {
+function openPopupImage (placeName, link) {
     openPopup(cardImagePopupElement);
     cardImagePopupImageElement.src = link;
     cardImagePopupDescriptionElement.textContent = placeName;
 }
 
-const popupMouseDownLayoutHandler = evt => {
-    closeModalOnMouseDownLayout(evt);
-    document.removeEventListener('keydown', closeModalOnPressEscape);
+function closePopupOnPressEscapeHandler(evt) {
+    closeModalOnPressEscapeHandler(evt, closePopup);
 }
 
-const openPopup = popupElement => {
+function closePopupOnMouseDownHandler(evt) {
+    closeModalOnMouseDownHandler(evt, closePopup);
+}
+
+function openPopup(popupElement) {
     openModal(popupElement);
-    document.addEventListener('keydown', closeModalOnPressEscape);
+    document.addEventListener('keydown', closePopupOnPressEscapeHandler);
 }
 
-const closePopup = popupElement => {
-    document.removeEventListener('keydown', closeModalOnPressEscape);
+function closePopup(popupElement) {
+    document.removeEventListener('keydown', closePopupOnPressEscapeHandler);
     closeModal(popupElement);
 }
 /* End Functions */
@@ -54,11 +57,8 @@ profileEditButtonElement.addEventListener('click', () => {
     profileEditPopupFormNameElement.value = profileTitleElement.textContent;
     profileEditPopupFormDescriptionElement.value = profileDescriptionElement.textContent;
 });
-profileEditPopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
-profileEditPopupCloseButtonElement.addEventListener('click', () => {
-    closeModal(profileEditPopupElement);
-    document.removeEventListener('keydown', closeModalOnPressEscape);
-});
+profileEditPopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
+profileEditPopupCloseButtonElement.addEventListener('click', () => closePopup(profileEditPopupElement));
 profileEditPopupFormElement.addEventListener('submit', evt => {
     evt.preventDefault();
 
@@ -70,7 +70,7 @@ profileEditPopupFormElement.addEventListener('submit', evt => {
 });
 
 cardAddButtonElement.addEventListener('click', () => openPopup(cardAddPopupElement));
-cardAddPopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
+cardAddPopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
 cardAddPopupCloseButtonElement.addEventListener('click', () => closePopup(cardAddPopupElement));
 cardAddPopupFormElement.addEventListener('submit', evt => {
     evt.preventDefault();
@@ -81,7 +81,7 @@ cardAddPopupFormElement.addEventListener('submit', evt => {
     cardAddPopupFormUrlElement.value = '';
     closePopup(cardAddPopupElement);
 });
-cardImagePopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
+cardImagePopupElement.addEventListener('mousedown', closePopupOnMouseDownHandler);
 cardImagePopupCloseButtonElement.addEventListener('click', () => closePopup(cardImagePopupElement));
 /* End Events */
 

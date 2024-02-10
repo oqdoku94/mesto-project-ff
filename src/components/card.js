@@ -1,7 +1,7 @@
 const templateElement = document.querySelector('#card-template').content;
 const templateCardElement = templateElement.querySelector('.card');
 
-export const createCard = (name, link, removeCardCallback, likeCallback, showImageCallback) => {
+const createCard = (name, link, removeCardCallback, likeCallback, showImageCallback) => {
     const card = templateCardElement.cloneNode(true);
     const cardImageElement = card.querySelector('.card__image');
     const cardTitleElement = card.querySelector('.card__title');
@@ -17,10 +17,12 @@ export const createCard = (name, link, removeCardCallback, likeCallback, showIma
     return card;
 }
 
-export const removeCard = cardElement => {
+const removeCard = cardElement => {
     cardElement.remove();
 }
 
-export const likeCard = likeButton => {
+const likeCard = likeButton => {
     likeButton.classList.toggle('card__like-button_is-active');
 }
+
+export { createCard, removeCard, likeCard }
