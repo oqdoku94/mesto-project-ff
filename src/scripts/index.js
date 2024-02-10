@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { initialCards } from "./cards.js";
 import { createCard, removeCard, likeCard } from "../components/card.js"
-import { openModal, closeModal } from "../components/modal.js"
+import { openModal, closeModal, closeModalOnMouseDownLayout, closeModalOnPressEscape } from "../components/modal.js"
 
 /* Start Variables */
 const placesListElement = document.querySelector('.places__list');
@@ -26,46 +26,39 @@ const cardImagePopupDescriptionElement = cardImagePopupElement.querySelector('.p
 /* End Variables */
 
 /* Start Functions */
-const closePopupOnClickLayout = evt => {
-    if (evt.target === evt.currentTarget) {
-        closePopup(evt.currentTarget);
-    }
-};
-
-const closePopupOnPressEscape = evt => {
-    if (evt.key === 'Escape') {
-        const currentPopup = document.querySelector('.popup_is-opened');
-        closePopup(currentPopup);
-    }
+const openPopupImage = (placeName, link) => {
+    openPopup(cardImagePopupElement);
+    cardImagePopupImageElement.src = link;
+    cardImagePopupDescriptionElement.textContent = placeName;
 }
 
-const closePopup = popupElement => {
-    closeModal(popupElement);
-    document.removeEventListener('keydown', closePopupOnPressEscape);
+const popupMouseDownLayoutHandler = evt => {
+    closeModalOnMouseDownLayout(evt);
+    document.removeEventListener('keydown', closeModalOnPressEscape);
 }
 
 const openPopup = popupElement => {
     openModal(popupElement);
-    document.addEventListener('keydown', closePopupOnPressEscape);
+    document.addEventListener('keydown', closeModalOnPressEscape);
 }
 
-const openPopupImage = (placeName, link) => {
-    cardImagePopupImageElement.src = link;
-    cardImagePopupDescriptionElement.textContent = placeName;
-
-    openPopup(cardImagePopupElement);
+const closePopup = popupElement => {
+    document.removeEventListener('keydown', closeModalOnPressEscape);
+    closeModal(popupElement);
 }
 /* End Functions */
 
 /* Start Events */
 profileEditButtonElement.addEventListener('click', () => {
     openPopup(profileEditPopupElement);
-
     profileEditPopupFormNameElement.value = profileTitleElement.textContent;
     profileEditPopupFormDescriptionElement.value = profileDescriptionElement.textContent;
 });
-profileEditPopupElement.addEventListener('mousedown', closePopupOnClickLayout);
-profileEditPopupCloseButtonElement.addEventListener('click', () => closePopup(profileEditPopupElement));
+profileEditPopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
+profileEditPopupCloseButtonElement.addEventListener('click', () => {
+    closeModal(profileEditPopupElement);
+    document.removeEventListener('keydown', closeModalOnPressEscape);
+});
 profileEditPopupFormElement.addEventListener('submit', evt => {
     evt.preventDefault();
 
@@ -73,12 +66,11 @@ profileEditPopupFormElement.addEventListener('submit', evt => {
     profileDescriptionElement.textContent = profileEditPopupFormDescriptionElement.value;
     profileEditPopupFormNameElement.value = '';
     profileEditPopupFormDescriptionElement.value = '';
-
     closePopup(profileEditPopupElement);
 });
 
 cardAddButtonElement.addEventListener('click', () => openPopup(cardAddPopupElement));
-cardAddPopupElement.addEventListener('mousedown', closePopupOnClickLayout);
+cardAddPopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
 cardAddPopupCloseButtonElement.addEventListener('click', () => closePopup(cardAddPopupElement));
 cardAddPopupFormElement.addEventListener('submit', evt => {
     evt.preventDefault();
@@ -87,11 +79,9 @@ cardAddPopupFormElement.addEventListener('submit', evt => {
     placesListElement.prepend(card);
     cardAddPopupFormNameElement.value = '';
     cardAddPopupFormUrlElement.value = '';
-
     closePopup(cardAddPopupElement);
 });
-
-cardImagePopupElement.addEventListener('mousedown', closePopupOnClickLayout);
+cardImagePopupElement.addEventListener('mousedown', popupMouseDownLayoutHandler);
 cardImagePopupCloseButtonElement.addEventListener('click', () => closePopup(cardImagePopupElement));
 /* End Events */
 
