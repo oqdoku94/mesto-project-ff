@@ -1,7 +1,7 @@
 import '../pages/index.css'
 import { initialCards } from "./cards.js";
 import { createCard, removeCard, likeCard } from "../components/card.js"
-import { openModal, closeModal, closeModalOnMouseDownHandler } from "../components/modal.js"
+import { openModal, closeModal, handleCloseModalOnMouseDown } from "../components/modal.js"
 
 /* Start Variables */
 const placesListElement = document.querySelector('.places__list');
@@ -33,17 +33,17 @@ const openPopupImage = (placeName, link) => {
     cardImagePopupDescriptionElement.textContent = placeName;
 }
 
-const profileEditButtonClickHandler = () => {
+const handleProfileEditButtonClick = () => {
     openModal(profileEditPopupElement);
     profileEditPopupFormNameElement.value = profileTitleElement.textContent;
     profileEditPopupFormDescriptionElement.value = profileDescriptionElement.textContent;
 }
 
-const profileEditPopupCloseButtonClickHandler = () => {
+const handleProfileEditPopupCloseButtonClick = () => {
     closeModal(profileEditPopupElement);
 }
 
-const profileEditPopupFormSubmitHandler = evt => {
+const handleProfileEditPopupFormSubmit = evt => {
     evt.preventDefault();
 
     profileTitleElement.textContent = profileEditPopupFormNameElement.value;
@@ -53,15 +53,15 @@ const profileEditPopupFormSubmitHandler = evt => {
     closeModal(profileEditPopupElement);
 }
 
-const cardAddButtonClickHandler = () => {
+const handleCardAddButtonClick = () => {
     openModal(cardAddPopupElement);
 }
 
-const cardAddPopupCloseButtonClickHandler = () => {
+const handleCardAddPopupCloseButtonClick = () => {
     closeModal(cardAddPopupElement);
 }
 
-const cardAddPopupFormSubmitHandler = evt => {
+const handleCardAddPopupFormSubmit = evt => {
     evt.preventDefault();
 
     const card = createCard(cardAddPopupFormNameElement.value, cardAddPopupFormUrlElement.value, removeCard, likeCard, openPopupImage);
@@ -71,24 +71,24 @@ const cardAddPopupFormSubmitHandler = evt => {
     closeModal(cardAddPopupElement);
 }
 
-const cardImagePopupCloseButtonClickHandler = () => {
+const handleCardImagePopupCloseButtonClick = () => {
     closeModal(cardImagePopupElement);
 }
 /* End Functions */
 
 /* Start Events */
-profileEditButtonElement.addEventListener('click', profileEditButtonClickHandler);
-profileEditPopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
-profileEditPopupCloseButtonElement.addEventListener('click', profileEditPopupCloseButtonClickHandler);
-profileEditPopupFormElement.addEventListener('submit', profileEditPopupFormSubmitHandler);
+profileEditButtonElement.addEventListener('click', handleProfileEditButtonClick);
+profileEditPopupElement.addEventListener('mousedown', handleCloseModalOnMouseDown);
+profileEditPopupCloseButtonElement.addEventListener('click', handleProfileEditPopupCloseButtonClick);
+profileEditPopupFormElement.addEventListener('submit', handleProfileEditPopupFormSubmit);
 
-cardAddButtonElement.addEventListener('click', cardAddButtonClickHandler);
-cardAddPopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
-cardAddPopupCloseButtonElement.addEventListener('click', cardAddPopupCloseButtonClickHandler);
-cardAddPopupFormElement.addEventListener('submit', cardAddPopupFormSubmitHandler);
+cardAddButtonElement.addEventListener('click', handleCardAddButtonClick);
+cardAddPopupElement.addEventListener('mousedown', handleCloseModalOnMouseDown);
+cardAddPopupCloseButtonElement.addEventListener('click', handleCardAddPopupCloseButtonClick);
+cardAddPopupFormElement.addEventListener('submit', handleCardAddPopupFormSubmit);
 
-cardImagePopupElement.addEventListener('mousedown', closeModalOnMouseDownHandler);
-cardImagePopupCloseButtonElement.addEventListener('click', cardImagePopupCloseButtonClickHandler);
+cardImagePopupElement.addEventListener('mousedown', handleCloseModalOnMouseDown);
+cardImagePopupCloseButtonElement.addEventListener('click', handleCardImagePopupCloseButtonClick);
 /* End Events */
 
 /* Start Runtime Initialize */

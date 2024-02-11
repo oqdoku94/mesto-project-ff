@@ -1,24 +1,24 @@
 const openModal = popupElement => {
     popupElement.classList.add('popup_is-opened');
-    document.addEventListener('keydown', closeModalOnPressEscapeHandler);
+    document.addEventListener('keydown', handleCloseModalOnPressEscape);
 };
 
 const closeModal = popupElement => {
     popupElement.classList.remove('popup_is-opened');
-    document.removeEventListener('keydown', closeModalOnPressEscapeHandler);
+    document.removeEventListener('keydown', handleCloseModalOnPressEscape);
 }
 
-const closeModalOnMouseDownHandler = evt => {
+const handleCloseModalOnMouseDown = evt => {
     if (evt.target === evt.currentTarget) {
         closeModal(evt.currentTarget);
     }
 };
 
-const closeModalOnPressEscapeHandler = evt => {
+const handleCloseModalOnPressEscape = evt => {
     if (evt.key === 'Escape') {
         const currentPopup = document.querySelector('.popup_is-opened');
         closeModal(currentPopup);
     }
 }
 
-export { openModal, closeModal, closeModalOnMouseDownHandler }
+export { openModal, closeModal, handleCloseModalOnMouseDown }
