@@ -48,8 +48,7 @@ const handleProfileEditPopupFormOnSubmit = evt => {
 
     profileTitleElement.textContent = profileEditPopupFormNameElement.value;
     profileDescriptionElement.textContent = profileEditPopupFormDescriptionElement.value;
-    profileEditPopupFormNameElement.value = '';
-    profileEditPopupFormDescriptionElement.value = '';
+    profileEditPopupFormElement.reset();
     closeModal(profileEditPopupElement);
 }
 
@@ -66,8 +65,7 @@ const handleCardAddPopupFormOnSubmit = evt => {
 
     const card = createCard(cardAddPopupFormNameElement.value, cardAddPopupFormUrlElement.value, removeCard, likeCard, openPopupImage);
     placesListElement.prepend(card);
-    cardAddPopupFormNameElement.value = '';
-    cardAddPopupFormUrlElement.value = '';
+    cardAddPopupFormElement.reset();
     closeModal(cardAddPopupElement);
 }
 
