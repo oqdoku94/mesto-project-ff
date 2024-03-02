@@ -1,7 +1,8 @@
 import '../pages/index.css'
-import { initialCards } from "./cards.js";
-import { createCard, removeCard, likeCard } from "../components/card.js"
-import { openModal, closeModal, handleCloseModalOnMouseDown } from "../components/modal.js"
+import {initialCards} from "./cards.js";
+import {createCard, removeCard, likeCard} from "../components/card.js"
+import {openModal, closeModal, handleCloseModalOnMouseDown} from "../components/modal.js"
+import {clearValidation, enableValidation} from "../components/validation";
 
 /* Start Variables */
 const placesListElement = document.querySelector('.places__list');
@@ -23,6 +24,14 @@ const cardImagePopupElement = document.querySelector('.popup_type_image');
 const cardImagePopupCloseButtonElement = cardImagePopupElement.querySelector('.popup__close');
 const cardImagePopupImageElement = cardImagePopupElement.querySelector('.popup__image');
 const cardImagePopupDescriptionElement = cardImagePopupElement.querySelector('.popup__caption');
+const validateConfiguration = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+};
 /* End Variables */
 
 /* Start Functions */
@@ -37,6 +46,7 @@ const handleProfileEditButtonOnClick = () => {
     openModal(profileEditPopupElement);
     profileEditPopupFormNameElement.value = profileTitleElement.textContent;
     profileEditPopupFormDescriptionElement.value = profileDescriptionElement.textContent;
+    clearValidation(profileEditPopupFormElement, validateConfiguration)
 }
 
 const handleProfileEditPopupCloseButtonOnClick = () => {
@@ -67,6 +77,7 @@ const handleCardAddPopupFormOnSubmit = evt => {
     placesListElement.prepend(card);
     cardAddPopupFormElement.reset();
     closeModal(cardAddPopupElement);
+    clearValidation(cardAddPopupFormElement, validateConfiguration)
 }
 
 const handleCardImagePopupCloseButtonOnClick = () => {
@@ -96,6 +107,9 @@ initialCards.forEach(card => {
     const newCard = createCard(card.name, card.link, removeCard, likeCard, openPopupImage);
     placesListElement.append(newCard);
 });
+
+enableValidation(validateConfiguration);
 /* End Runtime Initialize */
+
 
 

@@ -1,0 +1,11 @@
+.popup__error {
+    display: inline-block;
+    visibility: hidden;
+    min-height: 24px;
+    color: rgb(255, 0, 0);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0;
+}
