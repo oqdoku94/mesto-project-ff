@@ -39,4 +39,4 @@ const isActiveLikeButtonElement = likeButton => {
     return likeButton.classList.contains('card__like-button_is-active');
 }
 
-export { createCardElement, removeCardElement, toggleLikeCardElement, isActiveLikeButtonElement }
+export {createCardElement, removeCardElement, toggleLikeCardElement, isActiveLikeButtonElement}

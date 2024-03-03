@@ -21,4 +21,4 @@ const handleCloseModalOnPressEscape = evt => {
     }
 }
 
-export { openModal, closeModal, handleCloseModalOnMouseDown }
+export {openModal, closeModal, handleCloseModalOnMouseDown}
