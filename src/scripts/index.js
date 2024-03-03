@@ -227,9 +227,7 @@ const runtimeInitialize = () => {
 
 /* Start Runtime Initialize */
 document.querySelectorAll('.popup').forEach(popupElement => popupElement.classList.add('popup_is-animated'));
-
-await runtimeInitialize();
-
+runtimeInitialize();
 enableValidation(validateConfiguration);
 /* End Runtime Initialize */
 
