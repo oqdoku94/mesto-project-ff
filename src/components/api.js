@@ -21,7 +21,7 @@ const sendHttpRequest = async (action, method, bodyObj) => {
         throw new Error(`Запрос по адресу \'${actionUrl}\' вернул код состояния \'${response.status}\'.`);
     }
 
-    return response;
+    return response.json();
 }
 
 const sendGetHttpRequest = async (action) => {
@@ -49,50 +49,42 @@ const sendPatchHttpRequest = async (action, bodyObj) => {
 /* Start Public Functions */
 
 export const getProfile = async () => {
-    const response = await sendGetHttpRequest('users/me');
-    return await response.json();
+    return await sendGetHttpRequest('users/me');
 }
 
 export const updateProfile = async (name, about) => {
-    const response = await sendPatchHttpRequest('users/me', {
+    return await sendPatchHttpRequest('users/me', {
         name, about
     });
-    return await response.json();
 }
 
 export const getCards = async () => {
-    const response = await sendGetHttpRequest('cards');
-    return await response.json();
+    return await sendGetHttpRequest('cards');
 }
 
 export const createCard = async (card) => {
-    const response = await sendPostHttpRequest('cards', {
+    return await sendPostHttpRequest('cards', {
         name: card.name,
         link: encodeURI(card.link)
     });
-    return await response.json();
 }
 
 export const removeCard = async (id) => {
-    const response = await sendDeleteHttpRequest(`cards/${id}`);
-    return await response.json();
+    return await sendDeleteHttpRequest(`cards/${id}`);
 }
 
 export const addLikeCard = async (id) => {
-    const response = await sendPutHttpRequest(`cards/likes/${id}`);
-    return await response.json();
+    return await sendPutHttpRequest(`cards/likes/${id}`);
 }
 
 export const removeLikeCard = async (id) => {
-    const response = await sendDeleteHttpRequest(`cards/likes/${id}`)
-    return await response.json();
+    return await sendDeleteHttpRequest(`cards/likes/${id}`);
 }
 
 export const updateProfileAvatar = async (url) => {
-    const response = await sendPatchHttpRequest(`users/me/avatar`, {
+    return await sendPatchHttpRequest(`users/me/avatar`, {
         avatar: encodeURI(url)
     });
-    return response.json();
 }
 
 /* End Public Functions */
