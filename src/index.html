@@ -40,17 +40,17 @@
             <h3 class="popup__title">Редактировать профиль</h3>
             <form class="popup__form" name="edit-profile" novalidate>
                 <label>
-                    <input id="name" type="text" name="name" class="popup__input popup__input_type_name"
+                    <input id="type_edit-name" type="text" name="name" class="popup__input popup__input_type_name"
                            placeholder="Имя"
                            required
                            minlength="2"
                            maxlength="40"
                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                            pattern="^[A-Za-zА-Яа-я\-\sёЁ]*$">
-                    <span class="name-error popup__error"></span>
+                    <span class="type_edit-name-error popup__error"></span>
                 </label>
                 <label>
-                    <input id="description" type="text" name="description"
+                    <input id="type_edit-description" type="text" name="description"
                            class="popup__input popup__input_type_description"
                            placeholder="Занятие"
                            required
@@ -58,7 +58,7 @@
                            maxlength="200"
                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                            pattern="^[A-Za-zА-Яа-я\-\sёЁ]*$">
-                    <span class="description-error popup__error"></span>
+                    <span class="type_edit-description-error popup__error"></span>
                 </label>
                 <button type="submit" class="button popup__button">Сохранить</button>
             </form>
@@ -70,20 +70,20 @@
             <h3 class="popup__title">Новое место</h3>
             <form class="popup__form" name="new-place" novalidate>
                 <label>
-                    <input id="card-name" type="text" name="place-name" class="popup__input popup__input_type_card-name"
+                    <input id="type_new-card-name" type="text" name="place-name" class="popup__input popup__input_type_card-name"
                            placeholder="Название"
                            required
                            minlength="2"
                            maxlength="30"
                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                            pattern="^[A-Za-zА-Яа-я\-\sёЁ]*$">
-                    <span class="card-name-error popup__error"></span>
+                    <span class="type_new-card-name-error popup__error"></span>
                 </label>
                 <label>
-                    <input id="url" type="url" name="link" class="popup__input popup__input_type_url"
+                    <input id="type_new-card-url" type="url" name="link" class="popup__input popup__input_type_url"
                            placeholder="Ссылка на картинку"
                            required>
-                    <span class="url-error popup__error"></span>
+                    <span class="type_new-card-url-error popup__error"></span>
                 </label>
                 <button type="submit" class="button popup__button">Сохранить</button>
             </form>
@@ -96,6 +96,21 @@
             <p class="popup__caption"></p>
         </div>
     </div>
+    <div class="popup popup_type_avatar">
+        <div class="popup__content">
+            <button type="button" class="popup__close"></button>
+            <h3 class="popup__title">Обновить аватар</h3>
+            <form class="popup__form" name="edit-avatar" novalidate>
+                <label>
+                    <input id="type_avatar-url" type="url" name="url" class="popup__input popup__input_type_avatar_url"
+                           placeholder="Ссылка на картинку"
+                           required>
+                    <span class="type_avatar-url-error popup__error"></span>
+                </label>
+                <button type="submit" class="button popup__button">Сохранить</button>
+            </form>
+        </div>
+    </div>
 </div>
 <template id="card-template">
     <li class="places__item card">
@@ -104,7 +119,10 @@
         <div class="card__description">
             <h2 class="card__title">
             </h2>
-            <button type="button" class="card__like-button"></button>
+            <div class="card__like">
+                <button type="button" class="card__like-button"></button>
+                <span class="card__like-count"></span>
+            </div>
         </div>
     </li>
 </template>
