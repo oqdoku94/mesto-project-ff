@@ -21,7 +21,7 @@ const sendHttpRequest = async (action, method, bodyObj) => {
         throw new Error(`Запрос по адресу \'${actionUrl}\' вернул код состояния \'${response.status}\'.`);
     }
 
-    return response.json();
+    return await response.json();
 }
 
 const sendGetHttpRequest = async (action) => {
