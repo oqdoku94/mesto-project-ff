@@ -1,7 +1,8 @@
 .popup__error {
-    display: inline-block;
+    display: block;
     visibility: hidden;
-    min-height: 24px;
+    min-height: 30px;
+    margin-block-start: 5px;
     color: rgb(255, 0, 0);
     font-family: inherit;
     font-size: 12px;
